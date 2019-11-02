@@ -69,58 +69,13 @@ The client and controlling machine will be `jupyter05.sdcc.bnl.gov`.
   1. Visualize output of job C on Jupyter05
 
 
-# SC19 material ends here
-
-## Remnants of April teleconference demo:
-
-### The players
-* client machine at pnnl
-* Argonne cluster:  `gsissh gsissh.lcrc.anl.gov` (seems to not be working as of 4/10/19)
-* Brookhaven Cluster   `gsissh -p 2222 spce01.sdcc.bnl.gov`
-* ORNL Cluster `gsissh -p 2222 dcde1000006@dcde-ext.ornl.gov`
-* Chimera ` /Applications/Chimera.app/Contents/MacOS/chimera`
-
-## The setup
-
-This is a real live demo of real science application running at two sites (Argonne, Brookhaven) with visualization being done on my desktop Mac here at pnnl.
-
-It builds on the work already done by John and Daniel to setup ID Management and gsissh at their sites, plus Ketan's work to build an application container to help with portability.
-
-  * Refer to John's Dan's work getting COManage set up to map cert ID's to Linux accounts at the various sites
-  * CIlogon certificate obtained via Argonne collaborator account  (PNNL is not ready for CILogon/InCommon)
-  * Show certificate PEM file
-  * start container, do grid-proxy-init
-  * ready to
-
 ### About the computing
 
 Cryo-Electron Microscopy is an experimental technique that can be used to determine atomic structure of biomolecules such as proteins.  The molecules are suspended in water and flash frozen into amorphous ice.  Then they are imaged with transmission electron Microscopy.  The data sets can be very large (multiple terabytes) and require extensive processing to construct 3D models of the molecule(s) present in the sample.
 
 We use the relion application, which can be run on many different types of compute platforms, including HPC clusters and GPGPU-based machines.  We will see a few computational steps of a multi-step  pipeline demonstrated today
 
-### The demo
-
-The demo is staged from my Macbook in the `~/dcde` directory.  It contains selected directories and files in it:
-
-I have a docker container that has gsissh client and a few other useful tools inside it:
-
- * dcde-gsi.sh        A handy script that fires up DCDE docker client shell
- * dcde-relion-demo   Working directory for staging files for the demo
- * relion21_tutorial  Data files for the relion demo, including precalculated data
- * scripts            Utility scripts for the demo
-
-## Input Data
-Movies are in  `Micrographs/Falcon_2012_06_12-*movie.mrcs` and they really don't look like anything
-
-
-## Enter the shell in the container
-
-```
-WE35271:dcde d3c724$ cd ~/dcde
-WE35271:dcde d3c724$ ./dcde-gsi.sh
-gsissh-45764
-[dcde@73b2df2749f7 ~]$
-```
+# April demo steps:
 
 ## Run 3D Classification at ANL:
 
