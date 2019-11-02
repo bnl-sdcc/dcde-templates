@@ -1,3 +1,4 @@
+#!/bin/env python
 """
 Fresh attempt 8/29/19 PM.  Take john's configfactory-generated config and see if
 we can do anything with it:

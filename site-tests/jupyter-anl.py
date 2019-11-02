@@ -1,3 +1,4 @@
+#!/bin/env python
 """
 Fresh attempt 9/6/19 AM.  This script emulates the other two site test scripts,
 but I'm extrapolating the parsl config from John's configfactory.py script
