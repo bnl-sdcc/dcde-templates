@@ -1,0 +1,30 @@
+universe = vanilla
+executable = /sdcc/u/dcde1000006/sc19-demo/bnl/by-hand/relion-bnl-demo.sh
+#
+#initialdir = /usatlas/grid/dcde1000006/dcde-relion-demo/PostProcess
+#arguments=  arg1 arg2
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+transfer_executable = true
+output = condor-output/relion-demo.$(Cluster).$(Process).out
+error= condor-output/relion-demo.$(Cluster).$(Process).error
+log = condor-output/relion-demo.$(Cluster).$(Process).log
+accounting_group = group_sdcc.main
+stream_output = True
+Requirements = regexp("^sp[oa]", machine)
+
+# Only set if singularity is not in $PATH.
+#SINGULARITY = /opt/singularity/bin/singularity
+# Forces _all_ jobs to run inside singularity.
+SINGULARITY_JOB = true
+# Maps $_CONDOR_SCRATCH_DIR on the host to /srv inside the image.
+SINGULARITY_TARGET_DIR = /srv
+# Writable scratch directories inside the image.  Auto-deleted after the job exits.
+MOUNT_UNDER_SCRATCH = /tmp, /var/tmp
+
+# use this for 16-way MPI run to get a full node and
+# enough RAM:
+#request_cpus = 16
+#request_memory = 10000000
+
+queue
