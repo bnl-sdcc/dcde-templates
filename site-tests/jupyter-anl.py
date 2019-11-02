@@ -68,7 +68,7 @@ config = Config(
             move_files=True,
             nodes_per_block=1,
             parallelism=0.0,
-            #scheduler_options='#SBATCH --exclusive\naccounting_group = group_sdcc.main',
+            scheduler_options='#SBATCH -A dcde\n#SBATCH -p bdwall',
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
             worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
