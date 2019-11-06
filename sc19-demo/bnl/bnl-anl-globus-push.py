@@ -63,7 +63,7 @@ source_endpoint_id = BNL_EP
 destination_endpoint_id = ANL_EP
 
 source_dir = '/hpcgpfs01/scratch/dcde1000006/sc19-data'
-dest_dir = '/blues/gpfs/home/dcowley/sc19-out'
+dest_dir = '/blues/gpfs/home/dcowley/sc19-data'
 
 
 # First authorize using those refresh tokens:
