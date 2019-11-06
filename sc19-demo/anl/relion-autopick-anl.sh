@@ -55,7 +55,6 @@ touch run.start
 
 
 # autopick step from relion 2.1 tutorial:
-FIXME:  Run this with singularity! ($HOME/relion_singv26.simg)
 # Do we need a "-B /localmount:/containermount" argument?
 
 singularity exec ${HOME}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $JOBOUT --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
