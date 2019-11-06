@@ -103,7 +103,6 @@ except:
 tdata = TransferData(tc, source_endpoint_id,
                      destination_endpoint_id,
                      label="DCDE Relion transfer",
-                     recursive_symlinks="keep",
                      sync_level="size")
 
 tdata.add_item(source_dir, dest_dir,
