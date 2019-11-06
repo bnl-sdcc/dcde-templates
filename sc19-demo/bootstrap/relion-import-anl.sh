@@ -4,11 +4,11 @@
 #SBATCH -t 0:20:00
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=36
-#SBATCH -J relion-autopick
+#SBATCH -J relion-import
 #SBATCH -p bdwall
 #SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap
-#SBATCH -o relion-autopick.%j.out
-#SBATCH -e relion-autopick.%j.err
+#SBATCH -o relion-import.%j.out
+#SBATCH -e relion-import.%j.err
 #SBATCH --mail-user=david.cowley@pnnl.gov
 
 
@@ -49,5 +49,6 @@ set -v
 touch run.start
 
 
-singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${HOME}/relion_singv26.simg 'relion_star_loopheader rlnMicrographMovieName > $MOVIESTAR ; ls Micrographs/*.mrcs >> $MOVIESTAR'
+singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${HOME}/relion_singv26.simg relion_star_loopheader rlnMicrographMovieName > $MOVIESTAR 
+singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${HOME}/relion_singv26.simg ls Micrographs/*.mrcs >> $MOVIESTAR
 touch run.stop
