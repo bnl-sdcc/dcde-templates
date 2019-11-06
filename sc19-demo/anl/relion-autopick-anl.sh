@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=36
 #SBATCH -J relion-autopick
 #SBATCH -p bdwall
-#SBATCH -D /blues/gpfs/home/dcowley/sc19-out
+#SBATCH -D /blues/gpfs/home/dcowley/sc19-data
 #SBATCH -o relion-autopick.%j.out
 #SBATCH -e relion-autopick.%j.err
 #SBATCH --mail-user=david.cowley@pnnl.gov
@@ -17,9 +17,12 @@ export I_MPI_FABRICS=shm:tmi
 
 #export PATH=$PATH:/home/ketan/dcde/relion/build/bin
 
-export DATAROOT=/blues/gpfs/home/dcowley/sc19-demo
+FIXME: I think CWD must be DATAROOT  for relative paths in precalc  star files to work?
+
+export DATAROOT=/blues/gpfs/home/dcowley/sc19-data
 export OUTROOT=/blues/gpfs/home/dcowley/sc19-out
 export JOBOUT=${OUTROOT}/AutoPick/job_${SLURM_JOBID}
+
 export INSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
 export REFSTAR=${DATAROOT}/Select/job007/class_averages.star
 
