@@ -17,8 +17,6 @@ export I_MPI_FABRICS=shm:tmi
 
 #export PATH=$PATH:/home/ketan/dcde/relion/build/bin
 
-FIXME: I think CWD must be DATAROOT  for relative paths in precalc  star files to work?
-
 export DATAROOT=/blues/gpfs/home/dcowley/sc19-data
 export OUTROOT=/blues/gpfs/home/dcowley/sc19-out
 export JOBOUT=${OUTROOT}/AutoPick/job_${SLURM_JOBID}
@@ -60,5 +58,5 @@ touch run.start
 # autopick step from relion 2.1 tutorial:
 # Do we need a "-B /localmount:/containermount" argument?
 
-singularity exec ${HOME}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $JOBOUT --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
+singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${HOME}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $JOBOUT --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
 touch run.stop
