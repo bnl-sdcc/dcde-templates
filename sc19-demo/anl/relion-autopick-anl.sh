@@ -17,7 +17,7 @@ export I_MPI_FABRICS=shm:tmi
 
 #export PATH=$PATH:/home/ketan/dcde/relion/build/bin
 
-export DATAROOT=/blues/gpfs/home/dcowley/sc19-demo
+export DATAROOT=/blues/gpfs/home/dcowley/sc19-data
 export OUTROOT=/blues/gpfs/home/dcowley/sc19-out
 export JOBOUT=${OUTROOT}/AutoPick/job_${SLURM_JOBID}
 export INSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
