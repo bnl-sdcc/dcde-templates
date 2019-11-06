@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=36
 #SBATCH -J relion-autopick
 #SBATCH -p bdwall
-#SBATCH -D /blues/gpfs/home/dcowley/sc19-data
+#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap
 #SBATCH -o relion-autopick.%j.out
 #SBATCH -e relion-autopick.%j.err
 #SBATCH --mail-user=david.cowley@pnnl.gov
