@@ -15,7 +15,6 @@
 
 export I_MPI_FABRICS=shm:tmi
 
-#export PATH=$PATH:/home/ketan/dcde/relion/build/bin
 
 export DATAROOT=/blues/gpfs/home/dcowley/sc19-data
 export OUTROOT=/blues/gpfs/home/dcowley/sc19-out
@@ -24,13 +23,19 @@ export JOBOUT=${OUTROOT}/AutoPick/job_${SLURM_JOBID}
 export INSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
 export REFSTAR=${DATAROOT}/Select/job007/class_averages.star
 
-
-#==========================
 mkdir -p $JOBOUT || exit
-cd $JOBOUT || exit
+# FIXED(?) If we go here, relion can't follow relative paths in its star files.
+# So stick with default working directory set by SBATCH -D directive above.
+#cd $JOBOUT || exit
+
+echo -n "working directory: "
+pwd
+
+#=========================
+# OLD STUFF:
+#export PATH=$PATH:/home/ketan/dcde/relion/build/bin
 #cp /home/ketan/dcde/relion_benchmark/emd_2660.map . || exit
 #ln -s /home/ketan/dcde/relion_benchmark/Particles ./Particles || exit
-#FIXME:  straighten out dirctory mappings
 #mkdir -p  $SLURM_SUBMIT_DIR/class3d || exit
 #ln -s ${DATAROOT}/Extract Extract || exit
 #=========================
