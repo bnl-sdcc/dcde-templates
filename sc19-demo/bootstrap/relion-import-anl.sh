@@ -16,10 +16,16 @@
 export I_MPI_FABRICS=shm:tmi
 
 
-#export DATAROOT=/blues/gpfs/home/dcowley/sc19-data
+# NOTE: collapse all  file activity into DATAROOT.  I wanted to treat the relion
+# tutorial  data dir as read-only but I don't think it likes that.
+
+# Also I may need to start this entire process from the beginning to have the
+
 export DATAROOT=/blues/gpfs/home/dcowley/relion-bootstrap
-export OUTROOT=/blues/gpfs/home/dcowley/sc19-out
-export JOBOUT=${OUTROOT}/AutoPick/job_${SLURM_JOBID}
+#export DATAROOT=/blues/gpfs/home/dcowley/sc19-data
+#export DATAROOT=/blues/gpfs/home/dcowley/sc19-out
+#export JOBOUT=${DATAROOT}/AutoPick/job_${SLURM_JOBID}
+#mkdir -p $JOBOUT || exit
 
 export INSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
 export CTFSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
@@ -29,7 +35,6 @@ export PARTSTAR=${DATAROOT}/Extract/job011/particles.star
 export PARTDIR=${DATAROOT}/Extract/job011/
 export MOVIESTAR=${DATAROOT}/Import/job001/movies.star
 
-mkdir -p $JOBOUT || exit
 # FIXED(?) If we go here, relion can't follow relative paths in its star files.
 # So stick with default working directory set by SBATCH -D directive above.
 #cd $JOBOUT || exit
