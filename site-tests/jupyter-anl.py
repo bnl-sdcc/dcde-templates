@@ -74,7 +74,7 @@ config = Config(
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
             #worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
-            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdeRX; export I_MPI_FABRICS=shm:tmi'
+            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate /lcrc/project/DCDE/envs/dcdeRX; export I_MPI_FABRICS=shm:tmi'
         ),
         storage_access=[],
         suppress_failure=False,
