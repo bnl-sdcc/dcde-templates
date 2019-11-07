@@ -68,7 +68,7 @@ config = Config(
             scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err\n#SBATCH --mail-user=david.cowley@pnnl.gov',
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
-            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdeRX; export I_MPI_FABRICS=shm:tmi'
+            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate /lcrc/project/DCDE/envs/dcdeRX; export I_MPI_FABRICS=shm:tmi'
         ),
         storage_access=[],
         suppress_failure=False,
