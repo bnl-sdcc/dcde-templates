@@ -81,7 +81,7 @@ config = Config(
         worker_debug=True,
         worker_logdir_root='/home/dcowley/parsl_scripts/logs',
         worker_port_range=(50000, 51000),
-        #worker_ports=None,
+        worker_ports=None,
         working_dir='/home/dcowley/parsl_scripts'
     )],
     lazy_errors=True,
