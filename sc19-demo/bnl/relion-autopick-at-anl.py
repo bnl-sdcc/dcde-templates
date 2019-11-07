@@ -1,7 +1,4 @@
 #!/bin/env python
-#
-#
-
 
 import parsl
 import os
@@ -39,7 +36,6 @@ config = Config(
         heartbeat_period=30,
         heartbeat_threshold=120,
         interchange_port_range=(50000, 51000),
-        interchange_address='10.70.128.9', #this is the address worker talk to inetrchange(head node)
         label='gssh.lcrc.anl.gov-slurm',
         launch_cmd='process_worker_pool.py {debug} {max_workers} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_url={task_url} --result_url={result_url} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} --hb_threshold={heartbeat_threshold} ',
         managed=True,
@@ -47,6 +43,7 @@ config = Config(
         #mem_per_worker=None,
         poll_period=10,
         prefetch_capacity=0,
+        interchange_address='10.70.128.9', #this is the address worker talk to inetrchange(head node)
         provider=SlurmProvider(
             'debug',
             channel=OAuthSSHChannel(
@@ -65,7 +62,7 @@ config = Config(
             move_files=True,
             nodes_per_block=1,
             parallelism=0.0,
-            scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err\n#SBATCH --mail-user=david.cowley@pnnl.gov',
+            scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
             worker_init='source /lcrc/project/DCDE/setup.sh;  source activate /lcrc/project/DCDE/envs/dcdeRX; export I_MPI_FABRICS=shm:tmi'
@@ -90,7 +87,6 @@ config = Config(
 
 parsl.load(config)
 
-# The bash_app will run on a worker node
 @bash_app
 def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
     """
@@ -99,12 +95,12 @@ def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
     mock : (Bool)
        when mock=True
     """
-    cmd_line = '''#!/bin/bash
+    cmd_line = '''#!/bin/bash -l
 
 export I_MPI_FABRICS=shm:tmi
 
 export DATAROOT=/blues/gpfs/home/dcowley/relion-bootstrap
-export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg # Avoid certain variables.
+export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg
 
 export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
 export REFSTAR=${{DATAROOT}}/Select/job007/class_averages.star
@@ -131,7 +127,6 @@ cat $tmp_file
 
 if __name__ == "__main__":
 
-
     anlhome='/home/dcowley'
     #relion_stdout=os.path.join(os.environ['HOME'], 'relion.out')
     #relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
@@ -155,7 +150,7 @@ if __name__ == "__main__":
     print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
     parsl.set_stream_logger()
     # Call Relion and wait for results
-    x = relion_autopick(stdout=relion_stdout, stderr=relion_stderr, mock = True)
+    x = relion_autopick(stdout=relion_stdout, stderr=relion_stderr, mock = False)
     x.result()
 
     if x.done():
