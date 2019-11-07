@@ -1,12 +1,4 @@
 #!/bin/env python
-"""
-Fresh attempt 9/6/19 AM.  This script emulates the other two site test scripts,
-but I'm extrapolating the parsl config from John's configfactory.py script
-and dcdeparsl.conf (the script tries to authenticate to the ANL site, and
-that's giving me 'connection refused errors.'  So the config is untested
-and probalby slightly wrong.
-
-"""
 
 import parsl
 import os
@@ -48,12 +40,12 @@ config = Config(
         launch_cmd='process_worker_pool.py {debug} {max_workers} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_url={task_url} --result_url={result_url} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} --hb_threshold={heartbeat_threshold} ',
         managed=True,
         max_workers=1,
-        #mem_per_worker=None,
+        mem_per_worker=None,
         poll_period=10,
         prefetch_capacity=0,
         interchange_address='10.70.128.9', #this is the address worker talk to inetrchange(head node)
         provider=SlurmProvider(
-            'bdwall',
+            'debug',
             channel=OAuthSSHChannel(
                 'gssh.lcrc.anl.gov',
                 envs={},
@@ -72,8 +64,6 @@ config = Config(
             parallelism=0.0,
             scheduler_options='#SBATCH -A dcde\n#SBATCH -p bdwall',
             walltime='00:10:00',
-            #worker_init='source /home/dcde1000001/dcdesetup.sh'
-            #worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
             worker_init='source /lcrc/project/DCDE/setup.sh;  source activate /lcrc/project/DCDE/envs/dcdeRX; export I_MPI_FABRICS=shm:tmi'
         ),
         storage_access=[],
@@ -88,15 +78,15 @@ config = Config(
     monitoring=None,
     retries=0,
     run_dir='runinfo',
-    #strategy='simple',
-    strategy='None',
+    strategy='simple',
+    #strategy='None',
     usage_tracking=False
 )
-
 
 parsl.load(config)
 
 result = worker_info().result()
 print(result)
 print("result type: %s" % type(result))
-#exit()
+
+exit()
