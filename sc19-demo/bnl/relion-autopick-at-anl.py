@@ -39,6 +39,7 @@ config = Config(
         heartbeat_period=30,
         heartbeat_threshold=120,
         interchange_port_range=(50000, 51000),
+        interchange_address='10.70.128.9', #this is the address worker talk to inetrchange(head node)
         label='gssh.lcrc.anl.gov-slurm',
         launch_cmd='process_worker_pool.py {debug} {max_workers} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_url={task_url} --result_url={result_url} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} --hb_threshold={heartbeat_threshold} ',
         managed=True,
@@ -98,11 +99,12 @@ def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
     mock : (Bool)
        when mock=True
     """
-    cmd_line = '''#!/bin/bash -l
+    cmd_line = '''#!/bin/bash
 
 export I_MPI_FABRICS=shm:tmi
 
-export DATAROOT=/bluesegpfs/home/dcowley/relion-bootstrap
+export DATAROOT=/blues/gpfs/home/dcowley/relion-bootstrap
+export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg # Avoid certain variables.
 
 export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
 export REFSTAR=${{DATAROOT}}/Select/job007/class_averages.star
@@ -113,7 +115,7 @@ pwd
 module load singularity/2.6.0
 set -v
 
-singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${{HOME}}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $PICKDIR --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
+singularity exec  -B /blues/gpfs/home:/blues/gpfs/home $RELION_SIMG relion_autopick --i $INSTAR --ref $REFSTAR --odir $PICKDIR --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
     '''
     if mock:
         return '''tmp_file=$(mktemp);
@@ -129,8 +131,12 @@ cat $tmp_file
 
 if __name__ == "__main__":
 
-    relion_stdout=os.path.join(os.environ['HOME'], 'relion.out')
-    relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
+
+    anlhome='/home/dcowley'
+    #relion_stdout=os.path.join(os.environ['HOME'], 'relion.out')
+    #relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
+    relion_stdout=os.path.join(anlhome, 'relion.out')
+    relion_stderr=os.path.join(anlhome, 'relion.err')
 
     try:
         os.remove(relion_stdout)
