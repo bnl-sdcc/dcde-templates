@@ -29,7 +29,7 @@ def worker_info():
 
 
 #parsl.set_file_logger(filename='parsl-anl-slurm-log')
-#parsl.set_stream_logger()
+parsl.set_stream_logger()
 
 
 config = Config(
@@ -51,13 +51,14 @@ config = Config(
         #mem_per_worker=None,
         poll_period=10,
         prefetch_capacity=0,
+        interchange_address='10.70.128.9', #this is the address worker talk to inetrchange(head node)
         provider=SlurmProvider(
-            'debug',
+            'bdwall',
             channel=OAuthSSHChannel(
                 'gssh.lcrc.anl.gov',
                 envs={},
                 port=2222,
-                script_dir='/home/dcowley/ornl-parsl-scripts',
+                script_dir='/home/dcowley/anl-parsl-scripts',
                 username='dcowley'
             ),
             cmd_timeout=10,
@@ -72,7 +73,8 @@ config = Config(
             scheduler_options='#SBATCH -A dcde\n#SBATCH -p bdwall',
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
-            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
+            #worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
+            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdeRX; export I_MPI_FABRICS=shm:tmi'
         ),
         storage_access=[],
         suppress_failure=False,
@@ -86,7 +88,8 @@ config = Config(
     monitoring=None,
     retries=0,
     run_dir='runinfo',
-    strategy='simple',
+    #strategy='simple',
+    strategy='None',
     usage_tracking=False
 )
 
@@ -96,4 +99,4 @@ parsl.load(config)
 result = worker_info().result()
 print(result)
 print("result type: %s" % type(result))
-exit()
+#exit()
