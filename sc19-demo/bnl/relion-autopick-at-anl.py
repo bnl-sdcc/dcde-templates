@@ -1,23 +1,31 @@
-
 #!/bin/env python
 #
 #
 
 
-import sys
 import parsl
 import os
 from parsl.config import Config
 
 from parsl.channels import OAuthSSHChannel
-from parsl.providers import CondorProvider
+from parsl.providers import SlurmProvider
 from parsl.launchers import SrunLauncher
 from parsl.executors import HighThroughputExecutor
 from parsl.addresses import address_by_hostname
 from parsl.app.app import bash_app
 from parsl.app.app import python_app
 
-print(parsl.__version__) # We expect parsl master branch 0.8.0 (10/8/19) for this notebook
+@python_app()
+def worker_info():
+    #import subprocess
+    import os
+    return os.uname()
+
+
+
+#parsl.set_file_logger(filename='parsl-anl-slurm-log')
+#parsl.set_stream_logger()
+
 
 config = Config(
     app_cache=True,
@@ -26,52 +34,48 @@ config = Config(
     checkpoint_period=None,
     data_management_max_threads=10,
     executors=[HighThroughputExecutor(
-        #address='127.0.0.1',
         address='130.199.185.13',
-        cores_per_worker=1,
+        cores_per_worker=1.0,
         heartbeat_period=30,
         heartbeat_threshold=120,
-        #interchange_port_range=(55000, 56000),
-        label='spce01.sdcc.bnl.gov-htcondor',
+        interchange_port_range=(50000, 51000),
+        label='gssh.lcrc.anl.gov-slurm',
         launch_cmd='process_worker_pool.py {debug} {max_workers} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_url={task_url} --result_url={result_url} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} --hb_threshold={heartbeat_threshold} ',
-        mem_per_worker=4,
         managed=True,
         max_workers=1,
+        #mem_per_worker=None,
         poll_period=10,
         prefetch_capacity=0,
-        provider=CondorProvider(
+        provider=SlurmProvider(
+            'debug',
             channel=OAuthSSHChannel(
-                'spce01.sdcc.bnl.gov',
+                'gssh.lcrc.anl.gov',
                 envs={},
                 port=2222,
-                script_dir='/sdcc/u/dcde1000006/parsl_scripts',
-                username='dcde1000006'
+                script_dir='/home/dcowley/ornl-parsl-scripts',
+                username='dcowley'
             ),
-            environment={},
+            cmd_timeout=10,
+            exclusive=True,
             init_blocks=1,
             # launcher=SingleNodeLauncher(),
             max_blocks=1,
             min_blocks=1,
+            move_files=True,
             nodes_per_block=1,
-            #parallelism=1,
-            parallelism=0,
-            project='',
-            #Trying this Requirements directive per Dong's instructions:
-            #requirements='regexp("^sp[oa]", machine)',
-            scheduler_options='accounting_group = group_sdcc.main \nRequirements = (regexp("^sp[oa]", machine))',
-            transfer_input_files=[],
-            walltime='00:30:00',
-            #worker_init='source /sdcc/u/dcde1000001/dcdesetup.sh'
-            worker_init='source /hpcgpfs01/work/dcde/setup.sh; source activate dcdemaster20191008'
+            parallelism=0.0,
+            scheduler_options='#SBATCH -A dcde\n#SBATCH -p bdwall',
+            walltime='00:10:00',
+            #worker_init='source /home/dcde1000001/dcdesetup.sh'
+            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
         ),
         storage_access=[],
         suppress_failure=False,
         worker_debug=True,
-        worker_logdir_root='/sdcc/u/dcde1000006/parsl_scripts/logs',
+        worker_logdir_root='/home/dcowley/parsl_scripts/logs',
         worker_port_range=(50000, 51000),
-        #worker_port_range=(5000, 5100),   # per John H's message 8/29/19
-        worker_ports=None,
-        working_dir='/sdcc/u/dcde1000006/parsl_scripts'
+        #worker_ports=None,
+        working_dir='/home/dcowley/parsl_scripts'
     )],
     lazy_errors=True,
     monitoring=None,
@@ -82,8 +86,6 @@ config = Config(
 )
 
 
-
-# THIS IS ONLY A PLACEHOLDER CONFIG TO GET THIS QUICKLY TESTED
 
 parsl.load(config)
 
