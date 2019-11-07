@@ -64,7 +64,7 @@ config = Config(
             move_files=True,
             nodes_per_block=1,
             parallelism=0.0,
-            scheduler_options='#SBATCH -A dcde\n#SBATCH -p bdwall',
+            scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err\n#SBATCH --mail-user=david.cowley@pnnl.gov',
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
             worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
@@ -91,7 +91,7 @@ parsl.load(config)
 
 # The bash_app will run on a worker node
 @bash_app
-def relion_refine_mpi(job_dir=None, stdout=None, stderr=None, mock=True):
+def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
     """
     Parameters
     ----------
@@ -100,48 +100,20 @@ def relion_refine_mpi(job_dir=None, stdout=None, stderr=None, mock=True):
     """
     cmd_line = '''#!/bin/bash -l
 
-echo "****************************************"
-date
-whoami
-id
-hostname
-which singularity
-date
+export I_MPI_FABRICS=shm:tmi
 
-echo -n "initial directory:"
+export DATAROOT=/bluesegpfs/home/dcowley/relion-bootstrap
+
+export INSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
+export REFSTAR=${DATAROOT}/Select/job007/class_averages.star
+export PICKDIR=${DATAROOT}/AutoPick/job010/
+
+echo -n "working directory: "
 pwd
-echo -n "contents:"
-ls
+module load singularity/2.6.0
+set -v
 
-
-#export HOME=/direct/usatlas+grid/dcde1000006
-export HOME=/usatlas/grid/dcde1000006
-#env
-echo "contents of $HOME:"
-ls -l $HOME
-
-DATAROOT=${HOME}/relion-tut/relion21_tutorial/PrecalculatedResults
-echo "\$DATAROOT: $DATAROOT"
-#ls $DATAROOT
-
-mkdir -p PostProcess/$$/postprocess || exit
-#ln -s ${DATAROOT}/MaskCreate MaskCreate
-#ln -s ${DATAROOT}/Refine3D Refine3D
-
-echo -n "working directory:"
-pwd
-echo -n "contents:"
-ls
-
-
-singularity exec ${HOME}/relion_singv26.simg /usr/local/bin/relion_postprocess --mask ${DATAROOT}/MaskCreate/first3dref_th002_ext2_edg3/mask.mrc --i ${DATAROOT}/Refine3D/after_first_class3d/run  --angpix 3.54 --mtf ${DATAROOT}/mtf_falcon2_300kV.star --auto_bfac  --autob_lowres 10
-
-pwd
-ls -l
-
-date
-
-echo "****************************************"
+singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${HOME}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $PICKDIR --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
     '''
     if mock:
         return '''tmp_file=$(mktemp);
@@ -177,52 +149,9 @@ if __name__ == "__main__":
     print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
     parsl.set_stream_logger()
     # Call Relion and wait for results
-    x = relion_refine_mpi(stdout=relion_stdout, stderr=relion_stderr, mock = False )
+    x = relion_autopick(stdout=relion_stdout, stderr=relion_stderr, mock = True)
     x.result()
 
     if x.done():
         with open(x.stdout, 'r') as f:
             print(f.read())
-
-    sys.exit()
-
-
-
-################
-
-#!/bin/bash
-
-#SBATCH -A dcde
-#SBATCH -t 0:20:00
-#SBATCH -N 1
-#SBATCH --ntasks-per-node=36
-#SBATCH -J relion-autopick
-#SBATCH -p bdwall
-#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap
-#SBATCH -o relion-autopick.%j.out
-#SBATCH -e relion-autopick.%j.err
-#SBATCH --mail-user=david.cowley@pnnl.gov
-
-
-
-export I_MPI_FABRICS=shm:tmi
-
-
-export DATAROOT=/blues/gpfs/home/dcowley/relion-bootstrap
-
-export INSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
-export REFSTAR=${DATAROOT}/Select/job007/class_averages.star
-export PICKDIR=${DATAROOT}/AutoPick/job010/
-
-
-echo -n "working directory: "
-pwd
-
-module load singularity/2.6.0
-
-set -v
-
-touch run.start
-
-singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${HOME}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $PICKDIR --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
-touch run.stop
