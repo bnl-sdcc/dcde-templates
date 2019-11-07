@@ -67,7 +67,8 @@ config = Config(
             scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err\n#SBATCH --mail-user=david.cowley@pnnl.gov',
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
-            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdemaster20191004; export I_MPI_FABRICS=shm:tmi'
+            FIXME: NEED REMOTE_INTERCHANGE!
+            worker_init='source /lcrc/project/DCDE/setup.sh;  source activate dcdeRX; export I_MPI_FABRICS=shm:tmi'
         ),
         storage_access=[],
         suppress_failure=False,
@@ -104,16 +105,16 @@ export I_MPI_FABRICS=shm:tmi
 
 export DATAROOT=/bluesegpfs/home/dcowley/relion-bootstrap
 
-export INSTAR=${DATAROOT}/CtfFind/job003/micrographs_ctf.star
-export REFSTAR=${DATAROOT}/Select/job007/class_averages.star
-export PICKDIR=${DATAROOT}/AutoPick/job010/
+export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
+export REFSTAR=${{DATAROOT}}/Select/job007/class_averages.star
+export PICKDIR=${{DATAROOT}}/AutoPick/job010/
 
 echo -n "working directory: "
 pwd
 module load singularity/2.6.0
 set -v
 
-singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${HOME}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $PICKDIR --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
+singularity exec  -B /blues/gpfs/home:/blues/gpfs/home ${{HOME}}/relion_singv26.simg relion_autopick --i $INSTAR --ref $REFSTAR --odir $PICKDIR --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
     '''
     if mock:
         return '''tmp_file=$(mktemp);
