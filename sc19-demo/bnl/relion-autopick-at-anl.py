@@ -130,8 +130,10 @@ if __name__ == "__main__":
     anlhome='/home/dcowley'
     #relion_stdout=os.path.join(os.environ['HOME'], 'relion.out')
     #relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
-    relion_stdout=os.path.join(anlhome, 'relion.out')
-    relion_stderr=os.path.join(anlhome, 'relion.err')
+    #relion_stdout=os.path.join(anlhome, 'relion.out')
+    #relion_stderr=os.path.join(anlhome, 'relion.err')
+    relion_stdout='relion-anl-autopick.out'
+    relion_stderr='relion-anl-autopick.err'
 
     try:
         os.remove(relion_stdout)
@@ -148,9 +150,10 @@ if __name__ == "__main__":
 
 
     print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
-    parsl.set_stream_logger()
+    $parsl.set_stream_logger()
     # Call Relion and wait for results
     x = relion_autopick(stdout=relion_stdout, stderr=relion_stderr, mock = False)
+    print('relion_autopick() invoked, now wating...')
     x.result()
 
     if x.done():
