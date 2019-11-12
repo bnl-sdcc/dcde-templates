@@ -70,10 +70,10 @@ config = Config(
         storage_access=[],
         suppress_failure=False,
         worker_debug=True,
-        worker_logdir_root='/home/dcde1000006/parsl_scripts/logs',
+        worker_logdir_root='/nfs/scratch/dcde1000006/parsl_scripts/logs',
         worker_port_range=(50000, 51000),
         #worker_ports=None,
-        working_dir='/home/dcde1000006/parsl_scripts'
+        working_dir='/nfs/scratch/dcde1000006/parsl_scripts'
     )],
     lazy_errors=True,
     monitoring=None,
