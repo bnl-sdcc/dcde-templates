@@ -36,7 +36,7 @@ config = Config(
         heartbeat_period=30,
         heartbeat_threshold=120,
         interchange_port_range=(50000, 51000),
-        label='gssh.lcrc.anl.gov-slurm',
+        label='anl-slurm',
         launch_cmd='process_worker_pool.py {debug} {max_workers} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_url={task_url} --result_url={result_url} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} --hb_threshold={heartbeat_threshold} ',
         managed=True,
         max_workers=1,
@@ -152,10 +152,34 @@ if __name__ == "__main__":
     print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
     # parsl.set_stream_logger()
     # Call Relion and wait for results
+    """
+    Take a look back at https://github.com/Parsl/demo_multifacility.
+
+    Where are stderr, stdout going..!?  parsl.log (on the client machine) says
+    it's available the bare filename I specify, apparently on the client at jupyterhub..
+
+    NOPE!  They're on argonne in  /blues/gpfs/dcowley/relion-bootstrap, which is
+    #SBATCH -D for the job that starts the..  interchange?
+
+    The job seems to break (slurmstepd: error: *** JOB 1317025 ON bdw-0524
+    CANCELLED AT 2019-11-11T22:43:53 ***), possibly because the client pukes on
+    file not found error on 'relion-anl-autopick.out' (which again is on the
+    remote machine).  Do I need to stage these files?
+
+    The developers guide seems to say that the DFK's execute_wait() functions
+    handle stderr,  stdin, stdout and call the channels.  "For channels that
+    execute remotely, a push_file function allows you to copy over files."
+
+    **oauth_ssh channel does not have push_file!!**
+
+
+    """
     x = relion_autopick(stdout=relion_stdout, stderr=relion_stderr, mock = False)
     print('relion_autopick() invoked, now wating...')
     x.result()
 
     if x.done():
-        with open(x.stdout, 'r') as f:
+        dfk.executor.execution_provider.channel.pull_file(relion_stdout, '.')
+        #with open(x.stdout, 'r') as f:
+        with open(relion_stdout, 'r') as f:
             print(f.read())
