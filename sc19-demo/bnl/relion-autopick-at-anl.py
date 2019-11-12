@@ -87,6 +87,7 @@ config = Config(
 
 parsl.load(config)
 dfk = parsl.dfk()
+print(dfk)
 
 @bash_app
 def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
