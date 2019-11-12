@@ -63,7 +63,7 @@ config = Config(
             nodes_per_block=1,
             parallelism=0.0,
             #scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
-            scheduler_options='#SBATCH -D /nfs/scratch/relion-bootstrap'
+            scheduler_options='#SBATCH -D /nfs/scratch/relion-bootstrap',
             walltime='00:10:00',
             worker_init='source /nfs/scratch/dcde1000012/RX.sh'
         ),
@@ -154,7 +154,7 @@ if __name__ == "__main__":
     print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
     # parsl.set_stream_logger()
     # Call Relion and wait for results
-    
+
     print('relion_autopick() invoked, now wating...')
     x.result()
 
