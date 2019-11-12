@@ -181,7 +181,9 @@ if __name__ == "__main__":
     x.result()
 
     if x.done():
-        dfk.executor.execution_provider.channel.pull_file(relion_stdout, '.')
+        # obsolete:
+        #dfk.executor.execution_provider.channel.pull_file(relion_stdout, '.')
+        dfk.executors['anl-slurm'].provider.channel.pull_file(relion_stdout, '.')
         #with open(x.stdout, 'r') as f:
         with open(relion_stdout, 'r') as f:
             print(f.read())
