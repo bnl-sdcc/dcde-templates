@@ -134,8 +134,8 @@ if __name__ == "__main__":
     #relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
     #relion_stdout=os.path.join(anlhome, 'relion.out')
     #relion_stderr=os.path.join(anlhome, 'relion.err')
-    relion_stdout='relion-anl-autopick.out'
-    relion_stderr='relion-anl-autopick.err'
+    relion_stdout='/blues/gpfs/home/dcowley/relion-bootstrap/relion-anl-autopick.out'
+    relion_stderr='/blues/gpfs/home/dcowley/relion-bootstrap/relion-anl-autopick.err'
 
     try:
         os.remove(relion_stdout)
