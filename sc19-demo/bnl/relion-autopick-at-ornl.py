@@ -20,7 +20,7 @@ def worker_info():
 
 
 
-#parsl.set_file_logger(filename='parsl-anl-slurm-log')
+#parsl.set_file_logger(filename='parsl-ornl-slurm-log')
 #parsl.set_stream_logger()
 
 
@@ -62,8 +62,8 @@ config = Config(
             move_files=True,
             nodes_per_block=1,
             parallelism=0.0,
-            #scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
-            scheduler_options='#SBATCH -D /nfs/scratch/relion-bootstrap',
+            #scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH
+            scheduler_options='#SBATCH -D /nfs/scratch/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
             walltime='00:10:00',
             worker_init='source /nfs/scratch/dcde1000012/RX.sh'
         ),
@@ -97,7 +97,7 @@ def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
     """
     cmd_line = '''#!/bin/bash -l
 
-export I_MPI_FABRICS=shm:tmi
+#export I_MPI_FABRICS=shm:tmi
 
 export DATAROOT=/nfs/scratch/relion-bootstrap
 export RELION_SIMG=/nfs/sw/relion/relion_singv26.simg
@@ -129,13 +129,13 @@ cat $tmp_file
 
 if __name__ == "__main__":
 
-    #anlhome='/home/dcowley'
+    #ornlhome='/home/dcowley'
     #relion_stdout=os.path.join(os.environ['HOME'], 'relion.out')
     #relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
-    #relion_stdout=os.path.join(anlhome, 'relion.out')
-    #relion_stderr=os.path.join(anlhome, 'relion.err')
-    relion_stdout='relion-anl-autopick.out'
-    relion_stderr='relion-anl-autopick.err'
+    #relion_stdout=os.path.join(ornlhome, 'relion.out')
+    #relion_stderr=os.path.join(ornlhome, 'relion.err')
+    relion_stdout='relion-ornl-autopick.out'
+    relion_stderr='relion-ornl-autopick.err'
 
     try:
         os.remove(relion_stdout)
