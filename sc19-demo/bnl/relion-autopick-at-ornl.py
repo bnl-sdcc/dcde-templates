@@ -155,6 +155,7 @@ if __name__ == "__main__":
     # parsl.set_stream_logger()
     # Call Relion and wait for results
 
+    x = relion_autopick(stdout=relion_stdout, stderr=relion_stderr, mock = False)
     print('relion_autopick() invoked, now wating...')
     x.result()
 
