@@ -129,6 +129,7 @@ cat $tmp_file
 
 if __name__ == "__main__":
 
+    # FIXME: fix path handling here:
     anlhome='/home/dcowley'
     #relion_stdout=os.path.join(os.environ['HOME'], 'relion.out')
     #relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
@@ -185,5 +186,7 @@ if __name__ == "__main__":
         #dfk.executor.execution_provider.channel.pull_file(relion_stdout, '.')
         dfk.executors['anl-slurm'].provider.channel.pull_file(relion_stdout, '.')
         #with open(x.stdout, 'r') as f:
-        with open(relion_stdout, 'r') as f:
+        #with open(relion_stdout, 'r') as f:
+        # FIXME: fix path handling here:
+        with open('relion-anl-autopick.out', 'r') as f:
             print(f.read())
