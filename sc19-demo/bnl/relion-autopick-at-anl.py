@@ -138,6 +138,7 @@ if __name__ == "__main__":
     relion_stdout='/blues/gpfs/home/dcowley/relion-bootstrap/relion-anl-autopick.out'
     relion_stderr='/blues/gpfs/home/dcowley/relion-bootstrap/relion-anl-autopick.err'
 
+    """
     try:
         os.remove(relion_stdout)
     except OSError:
@@ -150,6 +151,7 @@ if __name__ == "__main__":
         pass
     except FileNotFoundError:
         pass
+    """
 
 
     print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
