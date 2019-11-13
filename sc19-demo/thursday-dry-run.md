@@ -37,10 +37,10 @@
 | Target Site | job step | output type |  Output treatment | Approx. time|
 | ----- | -----  | ----- | ----- | ---|
 | ORNL |autopick | | | | |
-| ORNL |extract | | | | |
-| ? | ctffind |  | |
-| ? | autopick |  | |
-| ANL | 3d refine? - view w/ NGL |   | |
+| ORNL |extract | | | |
+| ? | ctffind |  | | |
+| ? | autopick |  | | |
+| ANL | 3d refine? - view w/ NGL |   | | | 
 
 ##  Investigate (see sc19-screenply-cruft.md):
 
