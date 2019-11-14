@@ -43,6 +43,7 @@ relion_stdout=os.path.join(bnl_config.executors[0].working_dir, 'relion-bnl-impo
 relion_stderr=os.path.join( bnl_config.executors[0].working_dir, 'relion-bnl-import.err')
 
 demo_outdir='/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs'
+
 """
 try:
     os.remove(relion_stdout)
@@ -67,7 +68,7 @@ print('relion_import() invoked, now waiting...')
 x.result()
 
 if x.done():
-    bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, '.')
+    bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, demo_outdir)
     #with open(x.stdout, 'r') as f:
     #with open(relion_stdout, 'r') as f:
     # FIXME: fix path handling here:
