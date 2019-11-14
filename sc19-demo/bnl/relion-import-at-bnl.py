@@ -42,7 +42,8 @@ cat $tmp_file
 relion_stdout=os.path.join(bnl_config.executors[0].working_dir, 'relion-bnl-import.out')
 relion_stderr=os.path.join( bnl_config.executors[0].working_dir, 'relion-bnl-import.err')
 
-local_logfile=os.path.join('/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs', 'relion-bnl-import.out')
+local_logdir='/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs'
+local_logfile=os.path.join(local_logdir, 'relion-bnl-import.out')
 
 try:
     os.remove(relion_stdout)
@@ -67,11 +68,11 @@ except FileNotFoundError:
 print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
 # parsl.set_stream_logger()
 
-x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = True)
+x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = False )
 print('relion_import() invoked, now waiting...')
 x.result()
 
 if x.done():
-    bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, local_logfile)
+    bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, local_logdir)
     with open(local_logfile, 'r') as f:
         print(f.read())
