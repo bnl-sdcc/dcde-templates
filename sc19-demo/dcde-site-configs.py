@@ -87,7 +87,7 @@ bnl_config = Config(
         cores_per_worker=1,
         heartbeat_period=30,
         heartbeat_threshold=120,
-        #interchange_port_range=(55000, 56000),
+        interchange_port_range=(50000, 51000),
         label='spce01.sdcc.bnl.gov-htcondor',
         launch_cmd='process_worker_pool.py {debug} {max_workers} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_url={task_url} --result_url={result_url} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} --hb_threshold={heartbeat_threshold} ',
         mem_per_worker=4,
@@ -95,6 +95,7 @@ bnl_config = Config(
         max_workers=1,
         poll_period=10,
         prefetch_capacity=0,
+        interchange_address='130.199.185.9', #this is the address worker talk to inetrchange(head node)
         provider=CondorProvider(
             channel=OAuthSSHChannel(
                 'spce01.sdcc.bnl.gov',
