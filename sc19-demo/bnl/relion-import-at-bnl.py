@@ -17,6 +17,7 @@ def relion_import(job_dir=None, stdout=None, stderr=None, mock=False):
 export DATAROOT=/hpcgpfs01/scratch/dcde1000006/sc19-data
 export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg
 
+export MOVIESTAR=${{DATAROOT}}/Import/job001/movies.star
 export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
 export REFSTAR=${{DATAROOT}}/Select/job007/class_averages.star
 export PICKDIR=${{DATAROOT}}/AutoPick/job010/
