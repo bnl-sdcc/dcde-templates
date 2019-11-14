@@ -5,7 +5,7 @@ parsl.load(bnl_config)
 bnl_dfk = parsl.dfk()
 
 @bash_app
-def relion_import(job_dir=None, stdout=None, stderr=None, mock=True):
+def relion_import(job_dir=None, stdout=None, stderr=None, mock=False):
     """
     Parameters
     ----------
@@ -44,7 +44,6 @@ relion_stderr=os.path.join( bnl_config.executors[0].working_dir, 'relion-bnl-imp
 
 demo_outdir='/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs'
 
-"""
 try:
     os.remove(relion_stdout)
 except OSError:
@@ -57,7 +56,6 @@ except OSError:
     pass
 except FileNotFoundError:
     pass
-"""
 
 
 print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
@@ -69,9 +67,5 @@ x.result()
 
 if x.done():
     bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, demo_outdir)
-    #with open(x.stdout, 'r') as f:
-    #with open(relion_stdout, 'r') as f:
-    # FIXME: fix path handling here:
-    #with open('relion-bnl-import.out', 'r') as f:
     with open(relion_stdout, 'r') as f:
         print(f.read())
