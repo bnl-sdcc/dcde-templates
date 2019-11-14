@@ -25,8 +25,8 @@ echo -n "working directory: "
 pwd
 set -v
 
-singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${RELION_SIMG} relion_star_loopheader rlnMicrographMovieName > $MOVIESTAR
-singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${RELION_SIMG} ls Micrographs/*.mrcs >> $MOVIESTAR
+singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} relion_star_loopheader rlnMicrographMovieName > $MOVIESTAR
+singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} ls Micrographs/*.mrcs >> $MOVIESTAR
     '''
     if mock:
         return '''tmp_file=$(mktemp);
@@ -39,12 +39,10 @@ cat $tmp_file
         return cmd_line
 
 
-
-#relion_stdout='/blues/gpfs/home/dcowley/relion-bootstrap/relion-bnl-import.out'
-#relion_stderr='/blues/gpfs/home/dcowley/relion-bootstrap/relion-bnl-import.err'
 relion_stdout=os.path.join(bnl_config.executors[0].working_dir, 'relion-bnl-import.out')
 relion_stderr=os.path.join( bnl_config.executors[0].working_dir, 'relion-bnl-import.err')
 
+demo_outdir='/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs'
 """
 try:
     os.remove(relion_stdout)
