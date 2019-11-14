@@ -69,7 +69,7 @@ print('relion_import() invoked, now waiting...')
 x.result()
 
 if x.done():
-    bnl_dfk.executors['anl-slurm'].provider.channel.pull_file(relion_stdout, '.')
+    bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, '.')
     #with open(x.stdout, 'r') as f:
     #with open(relion_stdout, 'r') as f:
     # FIXME: fix path handling here:
