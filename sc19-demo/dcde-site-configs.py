@@ -118,8 +118,8 @@ bnl_config = Config(
             scheduler_options='accounting_group = group_sdcc.main \nRequirements = (regexp("^sp[oa]", machine))',
             transfer_input_files=[],
             walltime='00:30:00',
-            #worker_init='source /sdcc/u/dcde1000001/dcdesetup.sh'
-            worker_init='source /hpcgpfs01/work/dcde/setup.sh; source activate dcdemaster20191008'
+            #worker_init='source /hpcgpfs01/work/dcde/setup.sh; source activate dcdemaster20191008'
+            worker_init='source /hpcgpfs01/work/dcde/setup.sh; source activate dcdeRX'
         ),
         storage_access=[],
         suppress_failure=False,
