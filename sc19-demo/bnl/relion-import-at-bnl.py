@@ -15,7 +15,7 @@ def relion_import(job_dir=None, stdout=None, stderr=None, mock=False):
     cmd_line = '''#!/bin/bash -l
 
 export DATAROOT=/hpcgpfs01/scratch/dcde1000006/sc19-data
-export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg
+export RELION_SIMG=/sdcc/u/dcde1000006/relion_singv26.simg
 
 export MOVIESTAR=${{DATAROOT}}/Import/job001/movies.star
 export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
