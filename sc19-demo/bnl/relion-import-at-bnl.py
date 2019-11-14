@@ -48,8 +48,8 @@ cat $tmp_file
 
 #relion_stdout='/blues/gpfs/home/dcowley/relion-bootstrap/relion-bnl-import.out'
 #relion_stderr='/blues/gpfs/home/dcowley/relion-bootstrap/relion-bnl-import.err'
-relion_stdout=os.path.join(bnl_config.working_dir, 'relion-bnl-import.out')
-relion_stderr=os.path.join(bnl_config.working_dir, 'relion-bnl-import.err')
+relion_stdout=os.path.join(bnl_config.executors[0].working_dir, 'relion-bnl-import.out')
+relion_stderr=os.path.join( bnl_config.executors[0].working_dir, 'relion-bnl-import.err')
 
 """
 try:
