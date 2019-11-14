@@ -74,5 +74,5 @@ if x.done():
     #with open(relion_stdout, 'r') as f:
     # FIXME: fix path handling here:
     #with open('relion-bnl-import.out', 'r') as f:
-    with open('relion_stdout', 'r') as f:
+    with open(relion_stdout, 'r') as f:
         print(f.read())
