@@ -70,8 +70,8 @@ except FileNotFoundError:
 print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
 # parsl.set_stream_logger()
 
-x = relion_import(job_dir=bnl_config.working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = True)
-print('relion_import() invoked, now wating...')
+x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = True)
+print('relion_import() invoked, now waiting...')
 x.result()
 
 if x.done():
