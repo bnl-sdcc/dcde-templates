@@ -88,7 +88,7 @@ bnl_config = Config(
         heartbeat_period=30,
         heartbeat_threshold=120,
         interchange_port_range=(50000, 51000),
-        label='spce01.sdcc.bnl.gov-htcondor',
+        label='bnl-condor',
         launch_cmd='process_worker_pool.py {debug} {max_workers} -p {prefetch_capacity} -c {cores_per_worker} -m {mem_per_worker} --poll {poll_period} --task_url={task_url} --result_url={result_url} --logdir={logdir} --block_id={{block_id}} --hb_period={heartbeat_period} --hb_threshold={heartbeat_threshold} ',
         mem_per_worker=4,
         managed=True,
