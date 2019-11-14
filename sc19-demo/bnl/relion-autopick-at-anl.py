@@ -129,7 +129,7 @@ cat $tmp_file
 
 if __name__ == "__main__":
 
-    # FIXME: fix path handling here:
+    # FIXME: fix path handling here!
     anlhome='/home/dcowley'
     #relion_stdout=os.path.join(os.environ['HOME'], 'relion.out')
     #relion_stderr=os.path.join(os.environ['HOME'], 'relion.err')
@@ -165,18 +165,6 @@ if __name__ == "__main__":
 
     NOPE!  They're on argonne in  /blues/gpfs/dcowley/relion-bootstrap, which is
     #SBATCH -D for the job that starts the..  interchange?
-
-    The job seems to break (slurmstepd: error: *** JOB 1317025 ON bdw-0524
-    CANCELLED AT 2019-11-11T22:43:53 ***), possibly because the client pukes on
-    file not found error on 'relion-anl-autopick.out' (which again is on the
-    remote machine).  Do I need to stage these files?
-
-    The developers guide seems to say that the DFK's execute_wait() functions
-    handle stderr,  stdin, stdout and call the channels.  "For channels that
-    execute remotely, a push_file function allows you to copy over files."
-
-    **oauth_ssh channel does not have push_file!!**
-
 
     """
     x = relion_autopick(stdout=relion_stdout, stderr=relion_stderr, mock = False)
