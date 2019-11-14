@@ -1,12 +1,8 @@
+parsl.clear()
 
-
-
-
-
-
+#parsl.set_stream_logger()
 parsl.load(bnl_config)
 bnl_dfk = parsl.dfk()
-print(bnl_dfk)
 
 @bash_app
 def relion_import(job_dir=None, stdout=None, stderr=None, mock=True):
@@ -17,8 +13,6 @@ def relion_import(job_dir=None, stdout=None, stderr=None, mock=True):
        when mock=True
     """
     cmd_line = '''#!/bin/bash -l
-
-    FIX ALL THIS: THESE ARE ARGONNE PATHS
 
 export DATAROOT=/hpcgpfs01/scratch/dcde1000006/sc19-data
 export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg
@@ -31,8 +25,8 @@ echo -n "working directory: "
 pwd
 set -v
 
-singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${HOME}/relion_singv26.simg relion_star_loopheader rlnMicrographMovieName > $MOVIESTAR
-singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${HOME}/relion_singv26.simg ls Micrographs/*.mrcs >> $MOVIESTAR
+singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${RELION_SIMG} relion_star_loopheader rlnMicrographMovieName > $MOVIESTAR
+singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${RELION_SIMG} ls Micrographs/*.mrcs >> $MOVIESTAR
     '''
     if mock:
         return '''tmp_file=$(mktemp);
