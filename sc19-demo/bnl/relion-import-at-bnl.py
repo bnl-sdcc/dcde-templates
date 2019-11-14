@@ -22,9 +22,10 @@ export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
 export REFSTAR=${{DATAROOT}}/Select/job007/class_averages.star
 export PICKDIR=${{DATAROOT}}/AutoPick/job010/
 
+cd ${{DATAROOT}}
 echo -n "working directory: "
 pwd
-set -v
+#set -v
 
 singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} relion_star_loopheader rlnMicrographMovieName > ${{MOVIESTAR}}
 singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} ls Micrographs/*.mrcs >> ${{MOVIESTAR}}
