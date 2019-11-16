@@ -14,9 +14,6 @@ def relion_autopick_extract_ornl(job_dir=None, stdout=None, stderr=None, mock=Tr
     """
     cmd_line = '''#!/bin/bash -l
 
-#export I_MPI_FABRICS=shm:tmi
-
-#export DATAROOT=/nfs/scratch/relion-bootstrap
 export DATAROOT=/nfs/data/dcde-store/scratch/sc19-demo
 export RELION_SIMG=/nfs/sw/relion/relion_singv26.simg
 
@@ -82,7 +79,7 @@ print ('job setup: \nstdout = {}\nstderr = {}'.format(relion_stdout,relion_stder
 # Call Relion and wait for results
 
 x = relion_autopick_extract_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = True)
-print('relion_autopick_extract_ornl() invoked, now wating...')
+print('relion_autopick_extract_ornl() invoked, now waiting...')
 x.result()
 print('relion_autopick_extract_ornl() returned, should print output below:')
 
