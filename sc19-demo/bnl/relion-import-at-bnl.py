@@ -26,7 +26,7 @@ export PICKDIR=${{DATAROOT}}/AutoPick/job010/
 cd ${{DATAROOT}}
 echo -n "working directory: "
 pwd
-#set -v
+set -v
 
 singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} relion_star_loopheader rlnMicrographMovieName > ${{MOVIESTAR}}
 singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} ls Micrographs/*.mrcs >> ${{MOVIESTAR}}
@@ -71,7 +71,7 @@ except FileNotFoundError:
 print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
 # parsl.set_stream_logger()
 
-x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = False )
+x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = True )
 print('relion_import() invoked, now waiting...')
 #x.result()
 
