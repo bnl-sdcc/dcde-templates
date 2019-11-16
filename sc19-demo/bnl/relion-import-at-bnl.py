@@ -2,6 +2,7 @@ parsl.clear()
 
 #parsl.set_stream_logger()
 parsl.load(bnl_config)
+# Note: clear(), load(), dfk() are in DataFlowKernelLoader (dflow.py)
 bnl_dfk = parsl.dfk()
 
 @bash_app
@@ -72,9 +73,16 @@ print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr)
 
 x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = False )
 print('relion_import() invoked, now waiting...')
-x.result()
+#x.result()
 
-if x.done():
+#print('relion_import() invoked has finished, output should print now:')
+
+# Try result() instead of done() to see if we blocked because we haven't shut
+# down:
+#if x.done():
+if x.result():
     bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, local_logdir)
     with open(local_logfile, 'r') as f:
         print(f.read())
+
+# CONSIDER: call cancel() to close out...?
