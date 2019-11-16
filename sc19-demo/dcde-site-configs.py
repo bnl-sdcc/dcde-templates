@@ -157,7 +157,7 @@ ornl_config = Config(
         #mem_per_worker=None,
         poll_period=10,
         prefetch_capacity=0,
-        interchange_address='128.219.185.39', #this is the address worker talk to inetrchange(head node)
+        interchange_address='128.219.185.39', #this is the address worker talk to interchange (head node)
         provider=SlurmProvider(
             'debug',
             channel=OAuthSSHChannel(
