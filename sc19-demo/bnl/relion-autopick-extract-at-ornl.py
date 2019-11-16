@@ -77,15 +77,15 @@ except FileNotFoundError:
     pass
 
 
-    print ('job setup: \nstdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
-    # parsl.set_stream_logger()
-    # Call Relion and wait for results
+print ('job setup: \nstdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
+# parsl.set_stream_logger()
+# Call Relion and wait for results
 
-    x = relion_autopick_extract_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = True)
-    print('relion_autopick_extract_ornl() invoked, now wating...')
-    x.result()
-    print('relion_autopick_extract_ornl() returned, should print output below:')
+x = relion_autopick_extract_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = True)
+print('relion_autopick_extract_ornl() invoked, now wating...')
+x.result()
+print('relion_autopick_extract_ornl() returned, should print output below:')
 
-    if x.done():
-        with open(x.stdout, 'r') as f:
-            print(f.read())
+if x.done():
+    with open(x.stdout, 'r') as f:
+        print(f.read())
