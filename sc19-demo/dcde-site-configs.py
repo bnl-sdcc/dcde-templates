@@ -42,7 +42,7 @@ anl_config = Config(
                 'gssh.lcrc.anl.gov',
                 envs={},
                 port=2222,
-                script_dir='/home/dcowley/ornl-parsl-scripts',
+                script_dir='/home/dcowley/anl-parsl-scripts',
                 username='dcowley'
             ),
             cmd_timeout=10,
@@ -164,7 +164,8 @@ ornl_config = Config(
                 'dcde-ext.ornl.gov',
                 envs={},
                 port=2222,
-                script_dir='/home/dcde1000006/ornl-parsl-scripts',
+                #script_dir='/home/dcde1000006/ornl-parsl-scripts',
+                script_dir='/nfs/scratch/dcde1000006/ornl-parsl-scripts',
                 username='dcde1000006'
             ),
             cmd_timeout=10,
