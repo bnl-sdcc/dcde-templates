@@ -54,7 +54,7 @@ anl_config = Config(
             move_files=True,
             nodes_per_block=1,
             parallelism=0.0,
-            scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
+            scheduler_options='#SBATCH -A dcde\n#SBATCH -t 0:20:00\n#SBATCH -N 1\n#SBATCH --ntasks-per-node=36\n#SBATCH -J relion-autopick\n#SBATCH -p bdwall\n#SBATCH -D /blues/gpfs/home/dcowley/sc19-demo\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
             walltime='00:10:00',
             #worker_init='source /home/dcde1000001/dcdesetup.sh'
             worker_init='source /lcrc/project/DCDE/setup.sh;  source activate /lcrc/project/DCDE/envs/dcdeRX; export I_MPI_FABRICS=shm:tmi'
@@ -176,7 +176,7 @@ ornl_config = Config(
             move_files=True,
             nodes_per_block=1,
             parallelism=0.0,
-            scheduler_options='#SBATCH -D /nfs/scratch/relion-bootstrap\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
+            scheduler_options='#SBATCH -D /nfs/scratch/sc19-demo\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
             walltime='00:10:00',
             worker_init='source /nfs/scratch/dcde1000012/RX.sh'
         ),

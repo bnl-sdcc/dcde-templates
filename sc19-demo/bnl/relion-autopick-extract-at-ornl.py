@@ -81,7 +81,7 @@ except FileNotFoundError:
     # parsl.set_stream_logger()
     # Call Relion and wait for results
 
-    x = relion_autopick_extract_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = False)
+    x = relion_autopick_extract_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = True)
     print('relion_autopick_extract_ornl() invoked, now wating...')
     x.result()
     print('relion_autopick_extract_ornl() returned, should print output below:')
