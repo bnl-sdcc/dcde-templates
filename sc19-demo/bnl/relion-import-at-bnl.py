@@ -71,7 +71,7 @@ except FileNotFoundError:
 print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
 # parsl.set_stream_logger()
 
-x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = True )
+x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = False)
 print('relion_import() invoked, now waiting...')
 x.result()
 print('relion_import() invoked has finished, output should print now:')
@@ -86,4 +86,7 @@ if True:
 
 # Try to shut down if we're done
 if x.done():
+    print('parsl done() call returned True.  Trying to shut down executor...')
     bnl_dfk.executors['bnl-condor'].shutdown()
+else:
+    print("Oops!  parsl done() call returned False!  For some reason we don't think we're done!")
