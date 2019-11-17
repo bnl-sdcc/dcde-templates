@@ -73,16 +73,17 @@ print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr)
 
 x = relion_import(job_dir=bnl_config.executors[0].working_dir, stdout=relion_stdout, stderr=relion_stderr, mock = True )
 print('relion_import() invoked, now waiting...')
-#x.result()
+x.result()
+print('relion_import() invoked has finished, output should print now:')
 
-#print('relion_import() invoked has finished, output should print now:')
-
-# Try result() instead of done() to see if we blocked because we haven't shut
-# down:
+# FIXME: This is still goofy,  trying to get the calls and logic right:
 #if x.done():
-if x.result():
+#if x.result():
+if True:
     bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, local_logdir)
     with open(local_logfile, 'r') as f:
         print(f.read())
 
-# CONSIDER: call cancel() to close out...?
+# Try to shut down if we're done
+if x.done():
+    bnl_dfk.executors['bnl-condor'].shutdown()
