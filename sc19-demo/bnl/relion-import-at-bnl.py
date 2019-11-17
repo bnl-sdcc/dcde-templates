@@ -30,6 +30,10 @@ set -v
 
 singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} relion_star_loopheader rlnMicrographMovieName > ${{MOVIESTAR}}
 singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} ls Micrographs/*.mrcs >> ${{MOVIESTAR}}
+
+echo "Wrote file ${{MOVISTAR}}:"; echo
+cat ${{MOVIESTAR}}
+
     '''
     if mock:
         return '''tmp_file=$(mktemp);
