@@ -2,7 +2,7 @@ parsl.clear()
 
 parsl.load(anl_config)
 anl_dfk = parsl.dfk()
-#print(anl_dfk)
+print(anl_dfk.executors)
 
 @bash_app
 def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
@@ -40,8 +40,8 @@ cat $tmp_file
     else:
         return cmd_line
 
-relion_stdout=os.path.join(bnl_config.executors[0].working_dir, 'relion-anl-autopick.out')
-relion_stderr=os.path.join( bnl_config.executors[0].working_dir, 'relion-anl-autopick.err')
+relion_stdout=os.path.join(anl_config.executors[0].working_dir, 'relion-anl-autopick.out')
+relion_stderr=os.path.join( anl_config.executors[0].working_dir, 'relion-anl-autopick.err')
 
 local_logdir='/blues/gpfs/home/dcowley/sc19-data/parsl-outputs'
 local_logfile=os.path.join(local_logdir, 'relion-anl-autopick.out')
@@ -76,8 +76,6 @@ print('relion_autopick() returned, output should print below:')
 
 #if x.done():
 if True:
-    anl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, local_logdir)
+    anl_dfk.executors['anl-slurm'].provider.channel.pull_file(relion_stdout, local_logdir)
     with open(local_logfile, 'r') as f:
         print(f.read())
-
-        
