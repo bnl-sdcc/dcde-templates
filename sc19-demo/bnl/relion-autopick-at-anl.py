@@ -2,7 +2,7 @@ parsl.clear()
 
 parsl.load(anl_config)
 anl_dfk = parsl.dfk()
-print(anl_dfk.executors)
+#print(anl_dfk.executors)
 
 @bash_app
 def relion_autopick(job_dir=None, stdout=None, stderr=None, mock=True):
@@ -43,7 +43,10 @@ cat $tmp_file
 relion_stdout=os.path.join(anl_config.executors[0].working_dir, 'relion-anl-autopick.out')
 relion_stderr=os.path.join( anl_config.executors[0].working_dir, 'relion-anl-autopick.err')
 
-local_logdir='/blues/gpfs/home/dcowley/sc19-data/parsl-outputs'
+#local_logdir='/blues/gpfs/home/dcowley/sc19-data/parsl-outputs'
+# This is local to BNL!
+local_logdir= '/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs'
+
 local_logfile=os.path.join(local_logdir, 'relion-anl-autopick.out')
 
 try:
