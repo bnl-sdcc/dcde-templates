@@ -7,7 +7,7 @@ ornl_dfk = parsl.dfk()
 
 
 @bash_app
-def sort_at_ornl(job_dir=None, stdout=None, stderr=None, mock=True):
+def relion_sort_at_ornl(job_dir=None, stdout=None, stderr=None, mock=True):
     """
     Parameters
     ----------
