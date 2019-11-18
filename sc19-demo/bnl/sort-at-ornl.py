@@ -40,14 +40,14 @@ cat $tmp_file
     else:
         return cmd_line
 
-relion_stdout=os.path.join(anl_config.executors[0].working_dir, 'relion-ornl-sort.out')
+relion_stdout=os.path.join(ornl_config.executors[0].working_dir, 'relion-ornl-sort.out')
 
-relion_stderr=os.path.join( anl_config.executors[0].working_dir, 'relion-ornl-sort.err')
+relion_stderr=os.path.join( ornl_config.executors[0].working_dir, 'relion-ornl-sort.err')
 
 # This is local to BNL
 local_logdir= '/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs'
 
-local_logfile=os.path.join(local_logdir, 'relion-anl-sort.out')
+local_logfile=os.path.join(local_logdir, 'relion-ornl-sort.out')
 
 try:
     os.remove(relion_stdout)
