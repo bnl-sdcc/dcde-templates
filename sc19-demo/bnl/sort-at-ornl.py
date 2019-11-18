@@ -1,9 +1,9 @@
 
 parsl.clear()
 
-parsl.load(bnl_config)
-bnl_dfk = parsl.dfk()
-#print(bnl_dfk.executors)
+parsl.load(ornl_config)
+ornl_dfk = parsl.dfk()
+#print(ornl_dfk.executors)
 
 
 @bash_app
