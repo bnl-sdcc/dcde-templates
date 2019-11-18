@@ -18,18 +18,18 @@ def relion_import(job_dir=None, stdout=None, stderr=None, mock=False):
 export DATAROOT=/hpcgpfs01/scratch/dcde1000006/sc19-data
 export RELION_SIMG=/sdcc/u/dcde1000006/relion_singv26.simg
 
-export MOVIESTAR=${{DATAROOT}}/Import/job001/movies.star
-export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
-export REFSTAR=${{DATAROOT}}/Select/job007/class_averages.star
-export PICKDIR=${{DATAROOT}}/AutoPick/job010/
+export MOVIESTAR=Import/job001/movies.star
+export INSTAR=CtfFind/job003/micrographs_ctf.star
+export REFSTAR=Select/job007/class_averages.star
+export PICKDIR=AutoPick/job010/
 
 cd ${{DATAROOT}}
 echo -n "working directory: "
 pwd
 set -v
 
-singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} relion_star_loopheader rlnMicrographMovieName > ${{MOVIESTAR}}
-singularity exec  -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} ls Micrographs/*.mrcs >> ${{MOVIESTAR}}
+singularity exec -W ${{DATAROOT}} -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} relion_star_loopheader rlnMicrographMovieName > ${{MOVIESTAR}}
+singularity exec -W ${{DATAROOT}} -B /hpcgpfs01:/hpcgpfs01 ${{RELION_SIMG}} ls Micrographs/*.mrcs >> ${{MOVIESTAR}}
 
 echo "Wrote file ${{MOVISTAR}}:"; echo
 cat ${{MOVIESTAR}}
