@@ -28,7 +28,7 @@ echo -n "working directory: "
 pwd
 set -v
 
-singularity exec -B ${{DATAROOT}}:${{DATAROOT}} $RELION_SIMG relion_particle_sort --i ${{PARTSTAR}} --ref ${{REFSTAR}} --o ${{SORTSTAR}} --ctf
+singularity exec -H ${{DATAROOT}} -B ${{DATAROOT}}:${{DATAROOT}} $RELION_SIMG relion_particle_sort --i ${{PARTSTAR}} --ref ${{REFSTAR}} --o ${{SORTSTAR}} --ctf
     '''
     if mock:
         return '''tmp_file=$(mktemp);
