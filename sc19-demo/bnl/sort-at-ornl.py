@@ -15,7 +15,7 @@ def relion_sort_at_ornl(job_dir=None, stdout=None, stderr=None, mock=True):
        when mock=True
     """
     cmd_line = '''#!/bin/bash -l
-export DATAROOT=/nfs/scratch/sc19-demo
+export DATAROOT=/nfs/scratch/sc19-data
 export RELION_SIMG=/nfs/sw/relion/relion_singv26.simg
 
 export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star

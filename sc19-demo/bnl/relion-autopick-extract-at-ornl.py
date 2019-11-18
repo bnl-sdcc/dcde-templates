@@ -14,7 +14,7 @@ def relion_autopick_extract_ornl(job_dir=None, stdout=None, stderr=None, mock=Tr
     """
     cmd_line = '''#!/bin/bash -l
 
-export DATAROOT=/nfs/data/dcde-store/scratch/sc19-demo
+export DATAROOT=/nfs/data/dcde-store/scratch/sc19-data
 export RELION_SIMG=/nfs/sw/relion/relion_singv26.simg
 
 export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
@@ -26,8 +26,6 @@ export PARTDIR=${{DATAROOT}}/job011/
 echo -n "working directory: "
 pwd
 set -v
-
-# output directory /nfs/data/dcde-store/scratch/sc19-demo/parsl-outputs
 
 singularity exec -B ${{DATAROOT}}:${{DATAROOT}} ${{RELION_SIMG}} relion_autopick --i ${{INSTAR}} --ref ${{REFSTAR}} --odir ${{PICKDIR}} --pickname autopick --invert  --ctf  --ang 5 --shrink 0 --lowpass 20 --particle_diameter 200 --threshold 0.4 --min_distance 110 --max_stddev_noise 1.1 # --gpu "0"
 
@@ -51,7 +49,7 @@ cat $tmp_file
 relion_stdout=os.path.join(ornl_config.executors[0].working_dir, 'relion-ornl-extract.out')
 relion_stderr=os.path.join(ornl_config.executors[0].working_dir, 'relion-ornl-extract.err')
 
-local_logdir='/nfs/data/dcde-store/scratch/sc19-demo/parsl-outputs'
+local_logdir='/nfs/data/dcde-store/scratch/sc19-data/parsl-outputs'
 local_logfile=os.path.join(local_logdir, 'relion-ornl-extract.out')
 
 try:

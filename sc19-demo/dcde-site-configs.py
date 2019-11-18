@@ -177,7 +177,7 @@ ornl_config = Config(
             move_files=True,
             nodes_per_block=1,
             parallelism=0.0,
-            scheduler_options='#SBATCH -D /nfs/scratch/sc19-demo\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
+            scheduler_options='#SBATCH -D /nfs/scratch/sc19-data\n#SBATCH -o relion-autopick.%j.out\n#SBATCH -e relion-autopick.%j.err',
             walltime='00:10:00',
             worker_init='source /nfs/scratch/dcde1000012/RX.sh'
         ),
