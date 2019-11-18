@@ -82,5 +82,6 @@ x.result()
 print('relion_autopick_extract_ornl() returned, should print output below:')
 
 if x.done():
-    with open(x.stdout, 'r') as f:
+    ornl_dfk.executors['ornl-slurm'].provider.channel.pull_file(relion_stdout, local_logdir)
+    with open(local_logfile, 'r') as f:
         print(f.read())

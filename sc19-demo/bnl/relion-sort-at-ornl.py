@@ -15,7 +15,7 @@ def relion_sort_at_ornl(job_dir=None, stdout=None, stderr=None, mock=True):
        when mock=True
     """
     cmd_line = '''#!/bin/bash -l
-export DATAROOT=/nfs/scratch/sc19-data
+export DATAROOT=/nfs/scratch/sc19-demo
 export RELION_SIMG=/nfs/sw/relion/relion_singv26.simg
 
 export INSTAR=${{DATAROOT}}/CtfFind/job003/micrographs_ctf.star
@@ -75,7 +75,9 @@ print ('job setup: \nstdout = {}\nstderr = {}'.format(relion_stdout,relion_stder
 x = relion_sort_at_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = True )
 print('relion_sort_at_ornl() invoked, now waiting...')
 x.result()
+print('relion_sort_at_ornl() returned, should print output below:')
 
 if x.done():
-    with open(x.stdout, 'r') as f:
+    ornl_dfk.executors['ornl-slurm'].provider.channel.pull_file(relion_stdout, local_logdir)
+    with open(local_logfile, 'r') as f:
         print(f.read())
