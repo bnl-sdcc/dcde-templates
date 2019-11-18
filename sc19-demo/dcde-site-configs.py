@@ -75,6 +75,8 @@ anl_config = Config(
     usage_tracking=False
 )
 
+print("ANL Parsl config loaded.")
+
 bnl_config = Config(
     app_cache=True,
     checkpoint_files=None,
@@ -138,6 +140,8 @@ bnl_config = Config(
     usage_tracking=False
 )
 
+print("BNL Parsl config loaded.")
+
 ornl_config = Config(
     app_cache=True,
     checkpoint_files=None,
@@ -196,6 +200,8 @@ ornl_config = Config(
     strategy='simple',
     usage_tracking=False
 )
+
+print("ORNL Parsl config loaded.")
 
 ANL_EP = '57b72e31-9f22-11e8-96e1-0a6d4e044368'
 BNL_EP = '23f78cc8-41e0-11e9-a618-0a54e005f950'

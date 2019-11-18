@@ -80,9 +80,6 @@ print('relion_import() invoked, now waiting...')
 x.result()
 print('relion_import() invoked has finished, output should print now:')
 
-# FIXME: This is still goofy,  trying to get the calls and logic right:
-#if x.done():
-#if x.result():
 if True:
     bnl_dfk.executors['bnl-condor'].provider.channel.pull_file(relion_stdout, local_logdir)
     with open(local_logfile, 'r') as f:
