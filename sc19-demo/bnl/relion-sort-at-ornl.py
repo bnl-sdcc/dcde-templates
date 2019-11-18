@@ -72,7 +72,7 @@ print ('job setup: \nstdout = {}\nstderr = {}'.format(relion_stdout,relion_stder
 # parsl.set_stream_logger()
 # Call Relion and wait for results
 
-x = relion_sort_at_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = True )
+x = relion_sort_at_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = False)
 print('relion_sort_at_ornl() invoked, now waiting...')
 x.result()
 print('relion_sort_at_ornl() returned, should print output below:')
