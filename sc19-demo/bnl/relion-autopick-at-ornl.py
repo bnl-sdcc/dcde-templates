@@ -75,7 +75,7 @@ print ('job setup: \nstdout = {}\nstderr = {}'.format(relion_stdout,relion_stder
 # parsl.set_stream_logger()
 # Call Relion and wait for results
 
-x = relion_autopick_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = True)
+x = relion_autopick_ornl(stdout=relion_stdout, stderr=relion_stderr, mock = False )
 print('relion_autopick_ornl() invoked, now waiting...')
 x.result()
 print('relion_autopick_ornl() returned, should print output below:')
@@ -84,3 +84,4 @@ if x.done():
     ornl_dfk.executors['ornl-slurm'].provider.channel.pull_file(relion_stdout, local_logdir)
     with open(local_logfile, 'r') as f:
         print(f.read())
+        ornl_dfk.executors['ornl-slurm'].shutdown()
