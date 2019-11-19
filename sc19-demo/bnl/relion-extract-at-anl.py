@@ -22,6 +22,8 @@ export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg
 export INSTAR=CtfFind/job003/micrographs_ctf.star
 export REFSTAR=Select/job007/class_averages.star
 export PICKDIR=AutoPick/job010/
+export PARTSTAR=Extract/job011/particles.star
+export PARTDIR=job011/
 
 echo -n "working directory: "
 pwd
