@@ -16,7 +16,7 @@ def relion_extract(job_dir=None, stdout=None, stderr=None, mock=True):
 
 export I_MPI_FABRICS=shm:tmi
 
-export DATAROOT=/blues/gpfs/home/dcowley/relion-bootstrap
+export DATAROOT=/blues/gpfs/home/dcowley/sc19-demo
 export RELION_SIMG=/lcrc/project/DCDE/relion/relion_singv26.simg
 
 export INSTAR=CtfFind/job003/micrographs_ctf.star
@@ -72,7 +72,7 @@ except OSError:
 except FileNotFoundError:
     pass
 
-print ('job setup: stdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
+print ('job setup:\nstdout = {}\nstderr = {}'.format(relion_stdout,relion_stderr))
 # parsl.set_stream_logger()
 # Call Relion and wait for results
 
@@ -86,3 +86,4 @@ if True:
     anl_dfk.executors['anl-slurm'].provider.channel.pull_file(relion_stdout, local_logdir)
     with open(local_logfile, 'r') as f:
         print(f.read())
+        anl_dfk.executors['anl-slurm'].shutdown()
