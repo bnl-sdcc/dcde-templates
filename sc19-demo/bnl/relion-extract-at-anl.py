@@ -1,4 +1,4 @@
-extractparsl.clear()
+parsl.clear()
 
 parsl.load(anl_config)
 anl_dfk = parsl.dfk()

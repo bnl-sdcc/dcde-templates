@@ -48,7 +48,7 @@ cat $tmp_file
 relion_stdout=os.path.join(ornl_config.executors[0].working_dir, 'relion-ornl-autopick.out')
 relion_stderr=os.path.join(ornl_config.executors[0].working_dir, 'relion-ornl-autopick.err')
 
-local_logdir='/nfs/data/dcde-store/scratch/sc19-data/parsl-outputs'
+local_logdir= '/hpcgpfs01/scratch/dcde1000006/sc19-data/parsl-outputs'
 local_logfile=os.path.join(local_logdir, 'relion-ornl-autopick.out')
 
 try:
